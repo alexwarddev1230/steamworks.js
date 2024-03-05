@@ -1,47 +1,23 @@
 {
-    "name": "steamworks.js",
-    "version": "0.3.1",
-    "main": "index.js",
-    "types": "index.d.ts",
-    "napi": {
-        "name": "steamworksjs",
-        "triples": {
-            "additional": [
-                "x86_64-pc-windows-msvc",
-                "x86_64-unknown-linux-gnu",
-                "x86_64-apple-darwin",
-                "aarch64-apple-darwin"
-            ]
-        }
-    },
+    "name": "opensuse-compat-steamworks.js",
+    "version": "0.0.3",
     "files": [
-        "dist/*",
-        "index.js",
-        "*.d.ts",
-        "README.md"
+        "dist/**/*"
     ],
     "license": "MIT",
-    "devDependencies": {
-        "@napi-rs/cli": "2.16.2",
-        "rimraf": "5.0.1",
-        "typescript": "5.1.6",
-        "electron": "24.2.0"
-    },
     "dependencies": {
-        "@types/node": "*"
+        "steamworks.js": "^0.3.1"
     },
     "engines": {
         "node": ">= 14"
     },
     "scripts": {
-        "build": "npm run types && node build --release",
-        "build:debug": "node build",
-        "prune": "rimraf dist target client.d.ts",
-        "format": "cargo clippy --fix --allow-staged && cargo fmt",
-        "types": "tsc index.js --allowJs --declaration --emitDeclarationOnly"
+        "step:pre-build": "cp -r ./node_modules/steamworks.js/* ./dist/ && cp -r override_files/libs/* ./dist/dist/linux64/ && cp -r override_files/files/* ./dist/",
+        "step:pub":  "cd dist && npm publish",
+        "build": "npm run step:pre-build && npm run step:pub"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/ceifa/steamworks.js"
+        "url": "https://github.com/alexwarddev1230/steamworks.js"
     }
 }
